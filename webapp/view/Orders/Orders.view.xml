@@ -1,0 +1,12 @@
+<mvc:View controllerName="com.accenture.MyApp.view.Orders.Orders" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core"
+	xmlns:u="sap.ui.unified" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">>
+	<Page title="Digital Signature Pad">
+		<content>
+			<Button
+				text="Dialog"
+				width="230px"
+				press="onDialogPress"
+				class="sapUiSmallMarginBottom" />
+		</content>
+	</Page>
+</mvc:View>

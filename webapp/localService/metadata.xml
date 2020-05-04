@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+    <edmx:DataServices m:DataServiceVersion="2.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+        <Schema Namespace="default" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="UsuarioType">
+                <Key>
+                    <PropertyRef Name="idUsuario"/>
+                </Key>
+                <Property Name="idUsuario" Type="Edm.String" Nullable="false" MaxLength="15"/>
+                <Property Name="nombre" Type="Edm.String" MaxLength="100"/>
+                <Property Name="apellido" Type="Edm.String" MaxLength="100"/>
+                <NavigationProperty Name="Roles" Relationship="default.UsrRolType" FromRole="UsuarioPrincipal" ToRole="UsuarioRolDependent"/>
+                <NavigationProperty Name="Plantas" Relationship="default.UsrPlntType" FromRole="UsuarioPrincipal" ToRole="UsuarioPlantaDependent"/>
+                <NavigationProperty Name="UltimaPlanta" Relationship="default.UsrUltPlntType" FromRole="UsuarioPrincipal" ToRole="UsuarioUltimaPlantaDependent"/>
+            </EntityType>
+            <EntityType Name="UsuarioRolType">
+                <Key>
+                    <PropertyRef Name="idUsuario"/>
+                    <PropertyRef Name="idRol"/>
+                </Key>
+                <Property Name="idUsuario" Type="Edm.String" MaxLength="15"/>
+                <Property Name="idRol" Type="Edm.String" MaxLength="10"/>
+                <Property Name="descripcion" Type="Edm.String" MaxLength="100"/>
+            </EntityType>
+            <EntityType Name="UsuarioPlantaType">
+                <Key>
+                    <PropertyRef Name="idUsuario"/>
+                    <PropertyRef Name="idPlanta"/>
+                </Key>
+                <Property Name="idUsuario" Type="Edm.String" MaxLength="15"/>
+                <Property Name="idPlanta" Type="Edm.String" MaxLength="10"/>
+                <Property Name="descripcion" Type="Edm.String" MaxLength="100"/>
+            </EntityType>
+            <EntityType Name="UsuarioUltimaPlantaType">
+                <Key>
+                    <PropertyRef Name="idUsuario"/>
+                </Key>
+                <Property Name="idUsuario" Type="Edm.String" MaxLength="15"/>
+                <Property Name="idPlanta" Type="Edm.String" MaxLength="10"/>
+                <Property Name="descripcion" Type="Edm.String" MaxLength="100"/>
+            </EntityType>
+            <EntityType Name="SetUsuarioUltimaPlantaType">
+                <Key>
+                    <PropertyRef Name="idUsuario.idUsuario"/>
+                </Key>
+                <Property Name="idUsuario.idUsuario" Type="Edm.String" Nullable="false" MaxLength="15"/>
+                <Property Name="idPlanta.idPlanta" Type="Edm.String" MaxLength="10"/>
+            </EntityType>
+            <Association Name="UsrRolType">
+                <End Type="default.UsuarioType" Role="UsuarioPrincipal" Multiplicity="1"/>
+                <End Type="default.UsuarioRolType" Role="UsuarioRolDependent" Multiplicity="*"/>
+            </Association>
+            <Association Name="UsrPlntType">
+                <End Type="default.UsuarioType" Role="UsuarioPrincipal" Multiplicity="1"/>
+                <End Type="default.UsuarioPlantaType" Role="UsuarioPlantaDependent" Multiplicity="*"/>
+            </Association>
+            <Association Name="UsrUltPlntType">
+                <End Type="default.UsuarioType" Role="UsuarioPrincipal" Multiplicity="1"/>
+                <End Type="default.UsuarioUltimaPlantaType" Role="UsuarioUltimaPlantaDependent" Multiplicity="1"/>
+            </Association>
+            <EntityContainer Name="v2" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="Usuario" EntityType="default.UsuarioType"/>
+                <EntitySet Name="UsuarioRol" EntityType="default.UsuarioRolType"/>
+                <EntitySet Name="UsuarioPlanta" EntityType="default.UsuarioPlantaType"/>
+                <EntitySet Name="UsuarioUltimaPlanta" EntityType="default.UsuarioUltimaPlantaType"/>
+                <EntitySet Name="SetUsuarioUltimaPlanta" EntityType="default.SetUsuarioUltimaPlantaType"/>
+                <AssociationSet Name="UsrRol" Association="default.UsrRolType">
+                    <End Role="UsuarioPrincipal" EntitySet="Usuario"/>
+                    <End Role="UsuarioRolDependent" EntitySet="UsuarioRol"/>
+                </AssociationSet>
+                <AssociationSet Name="UsrPlnt" Association="default.UsrPlntType">
+                    <End Role="UsuarioPrincipal" EntitySet="Usuario"/>
+                    <End Role="UsuarioPlantaDependent" EntitySet="UsuarioPlanta"/>
+                </AssociationSet>
+                <AssociationSet Name="UsrUltPlnt" Association="default.UsrUltPlntType">
+                    <End Role="UsuarioPrincipal" EntitySet="Usuario"/>
+                    <End Role="UsuarioUltimaPlantaDependent" EntitySet="UsuarioUltimaPlanta"/>
+                </AssociationSet>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
